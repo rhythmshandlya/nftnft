@@ -1,8 +1,8 @@
-import { createContext, useContext, useState } from "react";
+import  { createContext, useContext, useState } from "react";
 
 const Web3Context = createContext(null);
 
-export default Web3Provider = ({ children }) => {
+ const Web3Provider = ({ children }) => {
 
     const [web3, setWeb3] = useState("Hello World!");
 
@@ -16,3 +16,4 @@ export default Web3Provider = ({ children }) => {
 export function useWeb3() { 
     return useContext(Web3Context);
 }
+export default Web3Provider;
