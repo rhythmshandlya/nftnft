@@ -1,10 +1,10 @@
-// import Layout from "../components/layout/Base"
-import {useWeb3} from "@components/provider/web3/Web3Provider"
+import { useWeb3 } from "@components/provider/web3/Web3Provider"
+
 export default function Home() {
-    const{web3}=useWeb3();
-    console.log(web3)
+    const { web3Api } = useWeb3();
+    console.log(web3Api.web3);
     return (
-      <p>{web3}</p>
+      <p>{web3Api.isLoading?"Is loading...":(web3Api.web3?"Connected":"Please install metamask")}</p>
     )
-  }
+}
   
