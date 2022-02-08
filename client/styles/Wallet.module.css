@@ -1,3 +1,4 @@
-.cardMargin{
-    margin: 10%
+.dFlex{
+    display: flex;
+    justify-content: space-between;
 }
