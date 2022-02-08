@@ -1,12 +1,28 @@
-import React from 'react';
+import React from 'react'
+import style from "@styles/Wallet.module.css"
 
-const Wallet = ({status, setWalletModal}) => {
+const Wallet = ({ status, setWalletModal }) => {
+    
+    const modalStyle = {
+        width: "700px",
+        height: "340px"
+    }
+
     return (
-        <div class={`modal ${status}`}>
-            <div class="modal-background"></div>
-            <div class="modal-content">
+        <div className={`modal ${status}`}>
+            <div className="modal-background"></div>
+            <div className="card" style={modalStyle}>
+                <div className="card-content">
+                    <div className="content">
+                        <a className="button is-light p-3" onClick={() => { setWalletModal("is-active") }}>
+                            <img src="https://docs.metamask.io/metamask-fox.svg" className='p-2'/>
+                            Connect Metamask
+                        </a>
+                    </div>
+                </div>
             </div>
-            <button class="modal-close is-large" aria-label="close" onClick={() => {setWalletModal("")}}></button>
+            <div className="modal-content">
+            </div>
         </div>
     );
 };
