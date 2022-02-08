@@ -1,15 +1,19 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
+import Wallet from '@components/modal/Wallet';
 
 const Navbar = () => {
+  const [walletModal, setWalletModal] = useState("");
+
   return (
+    <>
     <nav className="navbar p-2" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
         <Image src="/images/NFT.png" width="60" height="50" />
         <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
+          <a className="button is-light p-3">
+            <img src="https://img.icons8.com/external-kiranshastry-gradient-kiranshastry/64/000000/external-wallet-banking-and-finance-kiranshastry-gradient-kiranshastry.png" />
+          </a>
         </a>
       </div>
 
@@ -36,9 +40,9 @@ const Navbar = () => {
                 Contact
               </a>
               <hr className="navbar-divider" />
-                <a className="navbar-item">
-                  Report an issue
-                </a>
+              <a className="navbar-item">
+                Report an issue
+              </a>
             </div>
           </div>
         </div>
@@ -49,14 +53,16 @@ const Navbar = () => {
               <a className="button is-primary">
                 <strong> <i class="fas fa-wallet"></i>Profile</strong>
               </a>
-              <a className="button is-light p-3">
-              <img src="https://img.icons8.com/external-kiranshastry-gradient-kiranshastry/64/000000/external-wallet-banking-and-finance-kiranshastry-gradient-kiranshastry.png"/>
+                <a className="button is-light p-3" onClick={() => { setWalletModal("is-active") }}>
+                <img src="https://img.icons8.com/external-kiranshastry-gradient-kiranshastry/64/000000/external-wallet-banking-and-finance-kiranshastry-gradient-kiranshastry.png" />
               </a>
             </div>
           </div>
         </div>
       </div>
-    </nav>
+      </nav>
+      <Wallet status={walletModal} setWalletModal={setWalletModal}/>
+    </>
   );
 };
 
