@@ -8,7 +8,7 @@ contract wallet{
    }
 
    function sendEth( address payable recipient) public payable{
-       recipient.transfer((1 ether)*5);
+       recipient.transfer((1 ether));
    }
 }
 
