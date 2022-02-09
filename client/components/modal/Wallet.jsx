@@ -1,8 +1,12 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import style from "@styles/Wallet.module.css"
 import { useWeb3 } from "@components/provider/web3/Web3Provider"
-
+import walletJson from './../../../build/contracts/wallet'
+import Web3 from 'web3'
 const Wallet = ({ status, setWalletModal }) => {
+    useEffect(() => {
+        const web3 = new Web3(window.web3.currentProvider);
+    }, [])
     
     const { web3Api } = useWeb3();
     const [metamaskBtn, setMetamaskBtn] = useState("Connect Metamask");
@@ -30,7 +34,13 @@ const Wallet = ({ status, setWalletModal }) => {
             } 
         }
     }
-
+    function sender(){
+        const wallet = await $.getJSON('Wallet.json')
+        App.contracts.TodoList = TruffleContract(todoList)
+        App.contracts.TodoList.setProvider(App.web3Provider)
+        // Hydrate the smart contract with values from the blockchain
+        App.todoList = await App.contracts.TodoList.deployed()
+    }
     return (
         <div className={`modal ${status}`}>
             <div className="modal-background"></div>
@@ -41,6 +51,7 @@ const Wallet = ({ status, setWalletModal }) => {
                             <img src="https://docs.metamask.io/metamask-fox.svg" className='p-2' />
                             {metamaskBtn}
                         </a>
+                        <button onClick={sender}>add money</button>
                         <img width="35px" className='pointer'
                             onClick={() => { setWalletModal("") }}
                             src="https://img.icons8.com/external-vitaliy-gorbachev-fill-vitaly-gorbachev/50/000000/external-close-sales-vitaliy-gorbachev-fill-vitaly-gorbachev.png" />
