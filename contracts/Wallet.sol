@@ -6,4 +6,9 @@ contract wallet{
    function getBalance() public view returns (uint){
        return address(this).balance;
    }
+
+   function sendEth( address payable recipient) public payable{
+       recipient.transfer((1 ether)*5);
+   }
 }
+
