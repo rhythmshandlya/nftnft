@@ -1,12 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react'
 import style from "@styles/Wallet.module.css"
 import { useWeb3 } from "@components/provider/web3/Web3Provider"
-import walletJson from './../../../build/contracts/wallet'
-import Web3 from 'web3'
+
 const Wallet = ({ status, setWalletModal }) => {
-    useEffect(() => {
-        const web3 = new Web3(window.web3.currentProvider);
-    }, [])
+   
     
     const { web3Api } = useWeb3();
     const [metamaskBtn, setMetamaskBtn] = useState("Connect Metamask");
