@@ -1,10 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react'
 import style from "@styles/Wallet.module.css"
 import { useWeb3 } from "@components/provider/web3/Web3Provider"
-
-const Wallet = ({ status, setWalletModal }) => {
+import WalletContractBuild from 'contracts/wallet.json'
+const Wallet =  ({ status, setWalletModal }) => {
    
-    
     const { web3Api } = useWeb3();
     const [metamaskBtn, setMetamaskBtn] = useState("Connect Metamask");
     const btn = useRef(null);
@@ -13,7 +12,7 @@ const Wallet = ({ status, setWalletModal }) => {
         width: "700px",
         height: "340px"
     }
-
+    
     const handleConnection = async () => {
         if (metamaskBtn === "Get Metamask Today") { 
             window.open("https://metamask.io/download/", "_blank");
@@ -31,12 +30,11 @@ const Wallet = ({ status, setWalletModal }) => {
             } 
         }
     }
-    function sender(){
-        const wallet = await $.getJSON('Wallet.json')
-        App.contracts.TodoList = TruffleContract(todoList)
-        App.contracts.TodoList.setProvider(App.web3Provider)
-        // Hydrate the smart contract with values from the blockchain
-        App.todoList = await App.contracts.TodoList.deployed()
+    async function  sender(){
+      const networkid=await web3Api.web3.eth.net.getId()
+      const walletContract=new web3Api.web3.eth.Contract(WalletContractBuild.abi,WalletContractBuild.networks[networkid].address);
+      web3Api.web3.eth.getAccounts().then(console.log);
+      console.log("Acc= "+networkid);
     }
     return (
         <div className={`modal ${status}`}>
