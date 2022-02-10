@@ -1,7 +1,7 @@
 const chain = new Map();
 
 chain.set(1,"Ethereum mainnet");
-chain.set(2, "Morden (disused), Expanse mainnet");
+chain.set(2,"Morden (disused), Expanse mainnet");
 chain.set(3,"Ropsten");
 chain.set(4, "Rinkeby");
 chain.set(5,"Goerli");
