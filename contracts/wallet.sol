@@ -11,4 +11,3 @@ contract wallet{
        recipient.transfer((1 ether));
    }
 }
-
