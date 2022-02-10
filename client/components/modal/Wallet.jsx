@@ -15,7 +15,7 @@ const Wallet = ({ status, setWalletModal }) => {
         width: "700px",
         height: "340px"
     }
-
+    
     const handleConnection = async () => {
         if (metamaskBtn === "Get Metamask Today") { 
             window.open("https://metamask.io/download/", "_blank");
