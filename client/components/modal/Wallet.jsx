@@ -30,11 +30,11 @@ const Wallet =  ({ status, setWalletModal }) => {
             } 
         }
     }
+    
+    
     async function  sender(){
-      const networkid=await web3Api.web3.eth.net.getId()
-      const walletContract=new web3Api.web3.eth.Contract(WalletContractBuild.abi,WalletContractBuild.networks[networkid].address);
-      web3Api.web3.eth.getAccounts().then(console.log);
-      console.log("Acc= "+networkid);
+      
+      console.log("Acc= ");
     }
     return (
         <div className={`modal ${status}`}>

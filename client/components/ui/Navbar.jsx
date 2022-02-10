@@ -51,7 +51,7 @@ const Navbar = () => {
           <div className="navbar-item">
             <div className="buttons">
               <a className="button is-primary">
-                <strong> <i class="fas fa-wallet"></i>Profile</strong>
+                <strong> <i className="fas fa-wallet"></i>Profile</strong>
               </a>
                 <a className="button is-light p-3" onClick={() => { setWalletModal("is-active") }}>
                 <img src="https://img.icons8.com/external-kiranshastry-gradient-kiranshastry/64/000000/external-wallet-banking-and-finance-kiranshastry-gradient-kiranshastry.png" />
