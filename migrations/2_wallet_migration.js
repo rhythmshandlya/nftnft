@@ -1,5 +1,5 @@
-var TodoList = artifacts.require("./Wallet.sol");
+var Wallet = artifacts.require("./Wallet.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(TodoList);
+  deployer.deploy(Wallet);
 };
