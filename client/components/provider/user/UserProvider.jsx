@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import chain from "@util/chainMap";
 import detectEthereumProvider from '@metamask/detect-provider'
-
+import Web3 from "web3";
 
 const UserContext = createContext(null)
 
