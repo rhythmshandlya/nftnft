@@ -10,7 +10,7 @@ const Web3Provider = ({ children }) => {
         provider: null,
         web3: null,
         contract: null,
-        inLoading: true
+        isLoading: true
     })
 
     useEffect(() => {

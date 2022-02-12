@@ -2,10 +2,12 @@ import React, { useRef, useState,useEffect } from 'react'
 import style from "@styles/Wallet.module.css"
 import { useWeb3 } from "@components/provider/web3/Web3Provider"
 import {User} from "@components/provider/user/UserProvider"
-
+import WalletContract from 'contracts/wallet.json'
 const Wallet = ({ status, setWalletModal }) => {
     
     const { web3Api } = useWeb3();
+    // console.log(web3Api)
+
     const [metamaskBtn, setMetamaskBtn] = useState("Connect Metamask");
     const btn = useRef(null);
 
@@ -15,7 +17,10 @@ const Wallet = ({ status, setWalletModal }) => {
         width: "700px",
         height: "340px"
     }
-    
+    // const tester=new web3Api.web3.eth.Contract(WalletContract.abi,user.networkId)
+    // const [walletContract, setWalletContract] = useState(null)
+    // console.log(web3Api.isLoading)
+    const wallett=(!web3Api.isLoading?(new web3Api.web3.eth.Contract(WalletContract.abi,user.networkId)):null);
     const handleConnection = async () => {
         if (metamaskBtn === "Get Metamask Today") { 
             window.open("https://metamask.io/download/", "_blank");
@@ -42,7 +47,10 @@ const Wallet = ({ status, setWalletModal }) => {
             } 
         }
     }
-
+    function handler(){
+        if(wallett!=null)
+        console.log(wallett)
+    }
     return (
         <div className={`modal ${status}`}>
             <div className="modal-background"></div>
@@ -56,6 +64,7 @@ const Wallet = ({ status, setWalletModal }) => {
                         <img width="35px" className='pointer'
                             onClick={() => { setWalletModal("") }}
                             src="https://img.icons8.com/external-vitaliy-gorbachev-fill-vitaly-gorbachev/50/000000/external-close-sales-vitaliy-gorbachev-fill-vitaly-gorbachev.png" />
+                    <button onClick={handler}>Add money</button>
                     </div>
                     <h1>{user.address}</h1>
                     <h1>{user.networkId}</h1>
