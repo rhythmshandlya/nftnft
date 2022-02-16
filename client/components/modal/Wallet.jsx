@@ -1,7 +1,9 @@
 import React, { useRef, useState,useEffect } from 'react'
 import style from "@styles/Wallet.module.css"
 import { useWeb3 } from "@components/provider/web3/Web3Provider"
-import {User} from "@components/provider/user/UserProvider"
+import { User } from "@components/provider/user/UserProvider"
+import chain from "@util/chainMap";
+
 
 const Wallet = ({ status, setWalletModal }) => {
     
@@ -17,6 +19,13 @@ const Wallet = ({ status, setWalletModal }) => {
     }
     
     const handleConnection = async () => {
+        const networkId = window.ethereum.networkVersion;
+        setUser({
+            ...user,
+            networkId,
+            network: chain.get(Number(networkId))
+        });
+        
         if (metamaskBtn === "Get Metamask Today") { 
             window.open("https://metamask.io/download/", "_blank");
             window.location.reload();
@@ -29,25 +38,25 @@ const Wallet = ({ status, setWalletModal }) => {
                     address: account
                 }
             );
+            console.log(user);
             setMetamaskBtn("Metamask Connected");
-            btn.current.classList.add("Disabled");
-            //btn.current.disabled = true;
         }
         catch (err) {
+            console.log(err);
             if (err.code === -32002) {
-                setMetamaskBtn("Access Denied")
-                window.location.reload()
+                setMetamaskBtn("Connect To Metamask")
+                //window.location.reload()
             } else {
                 setMetamaskBtn("Get Metamask Today");
             } 
         }
-    }
+    }    
 
     return (
         <div className={`modal ${status}`}>
             <div className="modal-background"></div>
             <div className="card animate__animated animate__bounceInDown" style={modalStyle}>
-                <div className="card-content">
+                <div className="card-content" >
                     <div className="content" className={style.dFlex}>
                         <button className="button is-light p-3" ref={btn} onClick={() => { handleConnection() }}>
                             <img src="https://docs.metamask.io/metamask-fox.svg" className='p-2' />
@@ -60,6 +69,12 @@ const Wallet = ({ status, setWalletModal }) => {
                     <h1>{user.address}</h1>
                     <h1>{user.networkId}</h1>
                     <h1>{user.network}</h1>
+
+                    <div className="notification is-danger">
+                        <button className="delete"></button>
+                        {user.isUnlocked?<p></p>:<p>Unlock Metamask</p>}
+                    </div>
+                    
                 </div>
             </div>
             <div className="modal-content">
