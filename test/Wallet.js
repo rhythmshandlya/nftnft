@@ -8,10 +8,10 @@ contract('Wallet', async function (accounts) {
     })
     it("Eth Sender works", async()=>{
         const wallet = await Wallet.deployed();
-        console.log(accounts[5])
-        console.log("before"+await wallet.balanceOf(accounts[5]))
-        await wallet.sendEth({from: accounts[5], value: 10000000000000000000})
-        console.log("after"+await wallet.balanceOf(accounts[5]))
+        console.log(accounts[2])
+        console.log("before"+await wallet.balanceOf(accounts[2]))
+        await wallet.sendEth({from: accounts[2], value: 10000000000000000000})
+        console.log("after"+await wallet.balanceOf(accounts[2]))
         console.log("Balance is "+await wallet.getBalance())
     })
     // it("recives eth",async()=>{
@@ -23,5 +23,9 @@ contract('Wallet', async function (accounts) {
         await wallet.withdrawEth(5)
         console.log("Balance is "+await wallet.getBalance())
     })
-    
+    // it("return address",async()=>{
+    //     const wallet = await Wallet.deployed();
+    //     console.log("contract address= "+await wallet.getAddress())
+        
+    // })
 })

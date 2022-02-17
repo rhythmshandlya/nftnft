@@ -4,9 +4,9 @@ import { useWeb3 } from "@components/provider/web3/Web3Provider"
 import {User} from "@components/provider/user/UserProvider"
 import WalletContract from 'contracts/wallet.json'
 const Wallet = ({ status, setWalletModal }) => {
-    
+    console.log(WalletContract.abi)
     const { web3Api } = useWeb3();
-    // console.log(web3Api)
+    // console.log()
 
     const [metamaskBtn, setMetamaskBtn] = useState("Connect Metamask");
     const btn = useRef(null);
@@ -17,10 +17,8 @@ const Wallet = ({ status, setWalletModal }) => {
         width: "700px",
         height: "340px"
     }
-    // const tester=new web3Api.web3.eth.Contract(WalletContract.abi,user.networkId)
-    // const [walletContract, setWalletContract] = useState(null)
-    // console.log(web3Api.isLoading)
-    const wallett=(!web3Api.isLoading?(new web3Api.web3.eth.Contract(WalletContract.abi,user.networkId)):null);
+    // const networkId=web3Api.web3.eth.net.getId();
+    const wallett=(!web3Api.isLoading?(new web3Api.web3.eth.Contract(WalletContract.abi,user.network)):null);
     const handleConnection = async () => {
         if (metamaskBtn === "Get Metamask Today") { 
             window.open("https://metamask.io/download/", "_blank");
@@ -49,7 +47,8 @@ const Wallet = ({ status, setWalletModal }) => {
     }
     function handler(){
         if(wallett!=null)
-        console.log(wallett)
+        console.log(wallett.methods.getBalance())
+        // // web3Api.web3.eth.sendTransaction({from:user.address,to:})
     }
     return (
         <div className={`modal ${status}`}>

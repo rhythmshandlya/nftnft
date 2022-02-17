@@ -9,10 +9,12 @@ contract wallet{
 //
     address admin ;
     uint funds;
+    address public contractAddress;
     mapping(address => uint256) public balanceOf;
-    constructor(){
+    constructor() {
         admin=msg.sender;
         funds=0;
+        contractAddress=address(this);
     }
      
    function sendEth() public payable {
@@ -30,6 +32,8 @@ contract wallet{
        }
 
        return("Not Owner");
-   
+   }
+   function getAddress() public view returns(address){
+       return contractAddress;
    }
 }
