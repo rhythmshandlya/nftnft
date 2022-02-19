@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import detectEthereumProvider from '@metamask/detect-provider'
+import loadContract from '@util/loadContracts'
 import Web3 from "web3";
 
 const Web3Context = createContext(null)
@@ -10,7 +11,7 @@ const Web3Provider = ({ children }) => {
         provider: null,
         web3: null,
         contract: null,
-        inLoading: true
+        isLoading: true
     })
 
     useEffect(() => {
@@ -20,10 +21,16 @@ const Web3Provider = ({ children }) => {
             if (provider) {
                 const web3 = new Web3(provider);
 
+                //===========================================================//
+                const walletContract = await loadContract("Wallet", provider);
+                //===========================================================//
+                
                 setWeb3Api({
                     provider: provider,
                     web3: web3,
-                    contract: null,
+                    contract: {
+                        walletContract
+                    },
                     isLoading: false
                 });
 
