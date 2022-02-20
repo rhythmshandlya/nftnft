@@ -8,72 +8,66 @@ import chain from "@util/chainMap";
 const Wallet = ({ status, setWalletModal }) => {
     
     const { web3Api } = useWeb3();
-    const [metamaskBtn, setMetamaskBtn] = useState("Connect Metamask");
-    const [balance, setBalance] = useState(1);
     const { user, setUser } = User();
-
-    const updateBalance = async () => {
-        let bal;
-        try {
-            bal = await web3Api.contract.walletContract.getBalance({from: user.account[0]});
-            console.log(bal);
-        }
-        catch (err) {
-            console.log(err);
-        };
-        setBalance(Number(bal));
-    }
-
+    const [metamaskBtn, setMetamaskBtn] = useState("Connect Metamask");
     const btn = useRef(null);
-
-
-
     const modalStyle = {
         width: "700px",
         height: "340px"
     }
 
-    const addMoney = async () => {
-        await web3Api.contract.walletContract.add({ from: user.address[0], value: 10000000000000000000 });
-
+    const updateBalance = async () => {
         let bal;
+        console.log(user.address);
         try {
-            bal = await web3Api.contract.walletContract.getBalance();
-            console.log(bal);
+            bal = Number(await web3Api.contract.walletContract.getBalance({from: user.address}));
         }
         catch (err) {
             console.log(err);
         };
-        setBalance(Number(bal));
+        setUser({...user,balance: bal});
+    }
+
+    const addMoney = async () => {
+        await web3Api.contract.walletContract.add({ from: user.address, value: 10000000000000000000 });
+        updateBalance();
     }
 
     const withdrawMoney = async () => {
-        await web3Api.contract.walletContract.withdraw("10",{from: user.address[0]});
+        await web3Api.contract.walletContract.withdraw("10",{from: user.address});
         updateBalance();
     }
 
     const handleConnection = async () => {
+        
         const networkId = window.ethereum.networkVersion;
-        setUser({
-            ...user,
-            networkId,
-            network: chain.get(Number(networkId))
-        });
         
         if (metamaskBtn === "Get Metamask Today") {
             window.open("https://metamask.io/download/", "_blank");
             window.location.reload();
         }
+
         try {
-            const account = await web3Api.provider.request({ method: 'eth_requestAccounts' })
+            const acc = await web3Api.provider.request({ method: 'eth_requestAccounts' })
+            console.log(acc[0]);
+            setMetamaskBtn("Metamask Connected");
+
+            let bal;
+            try {
+                bal = Number(await web3Api.contract.walletContract.getBalance({from: user.address}));
+            }
+            catch (err) {
+                console.log(err);
+            };
             setUser(
                 {
                     ...user,
-                    address: account
+                    balance: bal,
+                    address: acc[0],
+                    networkId,
+                    network: chain.get(Number(networkId))
                 }
             );
-            console.log(user);
-            setMetamaskBtn("Metamask Connected");
         }
         catch (err) {
             console.log(err);
@@ -86,24 +80,13 @@ const Wallet = ({ status, setWalletModal }) => {
         }
     }
 
-    useEffect(async () => {
-        console.log("In use Effect");
-        console.log(web3Api);
-
-        if (web3Api.contract && user.account) {
-            updateBalance();
-        }
-
-    }, [web3Api])
-    
-
     return (
         <div className={`modal ${status}`}>
             <div className="modal-background"></div>
             <div className="card animate__animated animate__bounceInDown" style={modalStyle}>
                 <div className="card-content" >
                     <div className="content" className={style.dFlex}>
-                        <button className="button is-light p-3" ref={btn} onClick={() => { handleConnection() }}>
+                        <button className="button is-light p-3" id="connect-metamask" ref={btn} onClick={() => { handleConnection() }}>
                             <img src="https://docs.metamask.io/metamask-fox.svg" className='p-2' />
                             {metamaskBtn}
                         </button>
@@ -112,9 +95,8 @@ const Wallet = ({ status, setWalletModal }) => {
                             src="https://img.icons8.com/external-vitaliy-gorbachev-fill-vitaly-gorbachev/50/000000/external-close-sales-vitaliy-gorbachev-fill-vitaly-gorbachev.png" />
                     </div>
                     <h1>{user.address}</h1>
-                    <h1>{user.networkId}</h1>
                     <h1>{user.network}</h1>
-                    <h1>Current Balance: {balance}</h1>
+                    <h1>Current Balance: {user.balance}</h1>
                     <button className="button is-light p-3" onClick={() => { addMoney() }}>Add Money</button>
                     <button className="button is-light p-3" onClick={() => { withdrawMoney() }}>Withdraw Money</button>
                 </div>
