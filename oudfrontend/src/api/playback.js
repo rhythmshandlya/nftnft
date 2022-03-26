@@ -6,7 +6,7 @@ export const playback = {
       isPrivateSession: false,
       name: "Oud test device",
       type: "Laptop",
-      volumePercent: 65
+      volumePercent: 65,
     },
     progressMs: 0,
     isPlaying: false,
@@ -22,14 +22,14 @@ export const playback = {
           displayName: "حمزة نمرة",
           type: "string",
           image:
-            "https://www.almrsal.com/wp-content/uploads/2016/02/Vocalist-Islamic-Maher-Zain.jpg"
-        }
+            "https://www.almrsal.com/wp-content/uploads/2016/02/Vocalist-Islamic-Maher-Zain.jpg",
+        },
       ],
       albumId: "50",
       type: "track",
       audioUrl: "https://www.dndnha.com/song_download_2785_1",
       duartion: 205800,
-      views: 100000
+      views: 100000,
     },
     actions: {
       interrupting_playback: true,
@@ -41,11 +41,11 @@ export const playback = {
       toggling_repeat_context: false,
       toggling_shuffle: false,
       toggling_repeat_track: false,
-      transferring_playback: false
+      transferring_playback: false,
     },
     context: {
       type: "playlist",
-      id: "53"
-    }
-  }
+      id: "53",
+    },
+  },
 };

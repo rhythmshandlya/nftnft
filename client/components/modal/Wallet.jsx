@@ -10,6 +10,9 @@ const Wallet = ({ status, setWalletModal }) => {
     const { web3Api } = useWeb3();
     const { user, setUser } = User();
     const [metamaskBtn, setMetamaskBtn] = useState("Connect Metamask");
+    const [add, setAdd] = useState(0);
+    const [withdraw, setWithdraw] = useState(0);
+
     const btn = useRef(null);
     const modalStyle = {
         width: "700px",
@@ -29,13 +32,15 @@ const Wallet = ({ status, setWalletModal }) => {
     }
 
     const addMoney = async () => {
-        await web3Api.contract.walletContract.add({ from: user.address, value: 10000000000000000000 });
+        await web3Api.contract.walletContract.add({ from: user.address, value: add*1000000000000000000 });
         updateBalance();
+        setAdd(0);
     }
 
     const withdrawMoney = async () => {
-        await web3Api.contract.walletContract.withdraw("10",{from: user.address});
+        await web3Api.contract.walletContract.withdraw(withdraw.toString(),{from: user.address});
         updateBalance();
+        setWithdraw(0);
     }
 
     const handleConnection = async () => {
@@ -83,22 +88,56 @@ const Wallet = ({ status, setWalletModal }) => {
     return (
         <div className={`modal ${status}`}>
             <div className="modal-background"></div>
-            <div className="card animate__animated animate__bounceInDown" style={modalStyle}>
+            <div className="card animate__animated animate__bounceIn" style={modalStyle}>
                 <div className="card-content" >
                     <div className="content" className={style.dFlex}>
                         <button className="button is-light p-3" id="connect-metamask" ref={btn} onClick={() => { handleConnection() }}>
                             <img src="https://docs.metamask.io/metamask-fox.svg" className='p-2' />
                             {metamaskBtn}
                         </button>
-                        <img width="35px" className='pointer'
+                        <img className='pointer'
+                            width="40px"
+                            height="30px"
                             onClick={() => { setWalletModal("") }}
-                            src="https://img.icons8.com/external-vitaliy-gorbachev-fill-vitaly-gorbachev/50/000000/external-close-sales-vitaliy-gorbachev-fill-vitaly-gorbachev.png" />
+                            src="https://img.icons8.com/windows/64/000000/macos-close.png" />
                     </div>
-                    <h1>{user.address}</h1>
-                    <h1>{user.network}</h1>
-                    <h1>Current Balance: {user.balance}</h1>
-                    <button className="button is-light p-3" onClick={() => { addMoney() }}>Add Money</button>
-                    <button className="button is-light p-3" onClick={() => { withdrawMoney() }}>Withdraw Money</button>
+                    <hr />
+                    <p class="title is-3 m-3 has-text-primary">{user.balance} ETH</p>
+
+                    <div className='columns is-multiline'>
+                        <div className='column'>
+                            <div className="field">
+                                <div className="control">
+                                    <input className="input" type="number" placeholder="Enter Amount" value={add} onChange={(e) => {setAdd(e.target.value)}}/>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='column'>
+                            <button className="button is-light p-3" onClick={() => { addMoney() }}>Add</button>
+                        </div>
+                    </div>
+
+                    <div className='columns'>
+                        <div className='column'>
+                            <div className="field">
+                                <div className="control">
+                                    <input className="input" type="number" placeholder="Enter Amount" value={withdraw} onChange={(e) => {setWithdraw(e.target.value)}}/>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='column'>
+                            <button className="button is-light p-3" onClick={() => { withdrawMoney() }}>Withdraw</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div className='columns'>
+                    <div className='column is-two-thirds'>
+                        <p className='title is-6 m-4'>{user.address}</p>
+                    </div>
+                    <div className='column'>
+                        <p className='title is-6 m-4'>{user.network}</p>
+                    </div>
                 </div>
             </div>
             <div className="modal-content">
